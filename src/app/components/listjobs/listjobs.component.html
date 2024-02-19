@@ -1,0 +1,54 @@
+<div class="container mt-4" > 
+    <div class="card">
+        <div class="card-body">
+          <div class="card text-center text-bg-warning p-3 shadow-lg p-3 mb-3  rounded">
+            <span class="h3 pt-4"> List of Jobs</span>
+          </div>
+          <div class="row">
+            <div class="col-14">  
+              <img src="assets/job.png" style="width: 8%"class=" img-fluid max-width: 100%  rounded mx-auto d-block" alt="...">
+
+            </div>
+            <div class="col">  
+              <button class="btn btn-dark btn-lg float-lg-end " routerLink="/createJob"> Add </button>
+          </div>
+          </div>
+
+           <h2 *ngIf="jobsList.length==0" class="">There are no Jobs to show</h2>
+            <table *ngIf="jobsList.length > 0" class="table mt-3 table-striped" >
+                <thead class="table-success">
+                  <tr >
+                    <th>ID Job</th>
+                    <th>Job Name</th>
+                    <th>Job Type</th>
+                    <th>Descripcion</th>
+                    <th>Salary</th>
+                    <th>Posted date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let job of jobsList">
+                    <td >{{job.jobid}} </td>
+                    <td>{{job.jobname}}</td>
+                    <td>{{job.category}}</td>
+                    <td>{{job.desc}}</td>
+                    <td>{{job.salary| currency}}</td>
+                    <td>{{ job.dateCreation.toDate() | date: 'medium' }}</td>
+                    <td><i class="bi bi-pencil-square test-info" style="font-size: 2rem; color: cornflowerblue;"
+                                  [routerLink]="['/updateJob/',job.id]"></i></td>
+                    <td><i (click)="deleteJob(job.id)" class="bi bi-trash text-danger" style="font-size: 2rem"></i></td>
+                  </tr>
+                </tbody>
+              </table>         
+        </div>
+    </div>
+
+    
+</div>
+
+
+
+
+

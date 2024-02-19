@@ -1,0 +1,95 @@
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card text-center text-bg-warning p3 shadow-lg p-3 mb-5  rounded">
+            <h3 class="fs-1 fw-bolder text-center mt-4 mb-4 "> {{title}}
+              <div *ngIf="loading" class="spinner-border"  role="status">  </div>
+            </h3>
+          
+            <span *ngIf="submitted && FrmcreateJob.invalid" class="text-bg-danger p-3 badge badge-dark">ALL FIELDS ARE REQUIRED</span>
+          </div>
+         
+          <form class="mt-4" [formGroup]="FrmcreateJob" (ngSubmit)="addEditJob()">
+            <div class="row">
+              <div class="col mt-4">
+                <label class="h4" for="Job Id">Job Id </label>
+                <input
+                  type="text"
+                  [formGroup]="FrmcreateJob"
+                  class="form-control form-control-lg"
+                  placeholder=""
+                  id="jobid"
+                  formControlName="jobid"
+                />
+              </div>
+              <div class="col">
+                <div class="col mt-4">
+                  <label class="h4" for="Job Name">Salary </label>
+                  <input
+                    type="number"
+                    [formGroup]="FrmcreateJob"
+                    class="form-control form-control-lg"
+                    placeholder=""
+                    id="salary"
+                    formControlName="salary"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col mt-4">
+              <label class="h4" for="Job Name">Job Name </label>
+              <input
+                type="text"
+                [formGroup]="FrmcreateJob"
+                class="form-control form-control-lg"
+                placeholder=""
+                id="jobname"
+                formControlName="jobname"
+              />
+            </div>
+
+            <div class="form-group mb-3 mt-3">
+              <select
+                class=" h5 browser-default selectpicker show-tick col-lg-5"
+                [formGroup]="FrmcreateJob"
+                formControlName="category"
+              >
+                <option class="" disabled selected>Category</option>
+                <option class="h5" [value]="cat" *ngFor="let cat of Categories">
+                  <span> {{ cat }}</span>
+                </option>
+              </select>
+            </div>
+
+            <div class="col mt-4">
+              <label class="h4" for="Description">Description </label>
+              <textarea
+                type="text"
+                class="form-control form-control-lg"
+                id="descripcion"
+                rows="3"
+                id="desc"
+                formControlName="desc"
+              ></textarea>
+            </div>
+            <div class="text-center mt-4">
+              <button
+                type="text"
+                class="btn btn-success btn-lg me-md-2"
+                routerLink="/listjobs">
+                Return
+              </button>
+
+              <button type="submit" class="btn btn-success btn-lg me-md-2">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    >
+  </div>
+</div>
