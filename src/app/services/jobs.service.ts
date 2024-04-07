@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { collection, query, where } from "firebase/firestore";
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,15 @@ export class JobsService {
       return this.firestone.collection('jobs').add(job);
    }
   /*********************************************************** */
+  getJobfltro(value: string)
+  {
+
+    return this.firestone.collection('jobs').doc(value).get();
+  }
+
    getJobsSnap():Observable<any>
    {
-     return this.firestone.collection('jobs',ref => ref.orderBy('dateCreation','desc')).snapshotChanges();
+        return this.firestone.collection('jobs',ref => ref.orderBy('dateCreation','desc')).snapshotChanges();
    }
   /*********************************************************** */
    deleteJob(id:string):Promise<any>
@@ -29,6 +37,8 @@ export class JobsService {
   /*********************************************************** */
    getJobId(id: string): Observable<any> {
 
+
+       
       return this.firestone.collection('jobs').doc(id).snapshotChanges();
 
 

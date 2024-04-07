@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { JobsService } from 'src/app/services/jobs.service';
 
 type Carcontent = {
@@ -17,28 +18,32 @@ export class MainpageComponent implements OnInit {
 
   jobsList: any[] =[];
   
-   
+  jobsListFiltered: any[] =[];
+  
+  tempArray:any[] = [];
 
-   typeCategory = ''
+
   constructor(private _jobservice:JobsService) { }
 
   ngOnInit(): void {
     this.getJobs();
-
+    this.jobsList =  this.jobsListFiltered;
+   
   }
 
 
   getJobs() {
 
     this._jobservice.getJobsSnap().subscribe(data=> {
-       this.jobsList = [];
+     
        data.forEach((element:any) => 
        {
-       
-       this.jobsList.push({
-                       id:element.payload.doc.id,
-                       ...element.payload.doc.data()
-                       })
+
+        this.jobsListFiltered.push({
+                        id:element.payload.doc.id,
+                        ...element.payload.doc.data()
+                        })  
+           
        });
           console.log(this.jobsList);
      });
@@ -46,20 +51,49 @@ export class MainpageComponent implements OnInit {
        //console.log(element.payload.doc.data());
      } //end getJobs
 
-     FindCategory(cat:string): any[] {
 
-      if (cat == null )
-         return this.jobsList
-      else
-         return this.jobsList.filter(p => p.category = cat);
-    }
+     FindCategory(event:any)
+     {
+ 
+      if(event.target.value == "AllJobs")
+      {
+      this.jobsList =[];
+       this.jobsListFiltered = [];
+       this.getJobs();  
+       this.jobsList =  this.jobsListFiltered;
+      }
+      else{
+
+        this.jobsList = [];
+        this.getJobs();  
+          if (event.target.checked)
+          {
+           // console.log("target value "  + event.target.value)
+            this.tempArray = [];
+            this.tempArray = this.jobsListFiltered.filter((e:any)=> e.category == event.target.value);
+            this.jobsListFiltered = [];
+            console.log("temp array  " + this.tempArray)
+            this.jobsList = [];
+            this.tempArray.forEach(item => {
+
+              this.jobsList.push(item);
+              console.log(item.id, item.category);
+            });
 
 
-     changeJobs(){
+     
 
-        
+           
 
+
+          
+          }
+        }
      }
 
 
-}
+     }
+    
+
+
+
